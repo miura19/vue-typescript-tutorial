@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 const name1: string = "guitar!!"
-const name2: string = "base"
+const name2: string = "base!!"
 
 const price1: number = 20000
 const price2: number = 50000
