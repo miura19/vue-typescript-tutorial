@@ -2,6 +2,7 @@
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import Payment from './components/Payment.vue'
+import Tweet from './components/Tweet.vue';
 </script>
 
 <template>
@@ -15,7 +16,8 @@ import Payment from './components/Payment.vue'
 
   <main>
     <!-- <TheWelcome /> -->
-    <Payment />
+    <!-- <Payment /> -->
+    <Tweet />
   </main>
 </template>
 
