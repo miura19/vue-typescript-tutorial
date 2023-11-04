@@ -7,15 +7,15 @@ const tweets = [
 </script>
 
 <template>
-	<div class="container">
-		<h1>Tweeter</h1>
-		<div class="form-container">
-			<input type="text">
-			<button class="tweet-btn">post</button>
+	<div class="container flex flex-col items-center mx-auto">
+		<h1 class="text-3xl mb-8">Tweeter</h1>
+		<div class="flex flex-col items-center bg-gray-100 p-8 w-1/2 rounded-md">
+			<input type="text" class="p-2 border-2 border-black">
+			<button class="px-6 py-2 bg-teal-400 text-white mt-4 rounded-md cursor-pointer hover:bg-teal-300 transition-all duration-300">post</button>
 		</div>
-		<div class="tweet-container">
-			<ul v-for="tweet in tweets">
-				<li class="tweet-list">
+		<div class="mt-8">
+			<ul v-for="tweet in tweets" class=" px-0">
+				<li class="list-none text-xl">
 					<span>{{ tweet.id }} : </span>
 					<span>{{ tweet.description }}</span>
 				</li>
@@ -25,53 +25,5 @@ const tweets = [
 </template>
 
 <style scoped>
-.container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
 
-.form-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background-color: aliceblue;
-	padding: 24px 0;
-	width: 70%;
-	margin-bottom: 12px;
-	border-radius: 4px;
-}
-
-h1 {
-	font-weight: bold;
-	margin-bottom: 2rem;
-}
-
-input {
-	width: 12rem;
-	height: 2rem;
-}
-
-.tweet-btn {
-	background-color: cyan;
-	color: white;
-	border-radius: 4px;
-	height: 2rem;
-	width: 4rem;
-	font-weight: bolder;
-	cursor: pointer;
-	margin-top: 1.5rem;
-}
-
-.tweet-btn:hover {
-	opacity: 0.7;
-	transition: all 0.5s ease-out;
-}
-
-.tweet-list {
-	list-style: none;
-}
-
-ul {
-	padding-left: 0;
-}</style>
+</style>
