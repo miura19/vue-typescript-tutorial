@@ -14,7 +14,8 @@ export type Person = {
 const persons: Ref<Person[]> = ref([
     {id: 0 , name:'emi' , age: 35},
     {id: 1 , name:'kana' , age: 40},
-    {id: 2 , name:'soichiro' , age: 40},
+    {id: 2 , name:'soichiro' , age: 45},
+    {id: 3 , name:'tomoko' , age: 50},
 ])
 
 </script>
