@@ -1,29 +1,45 @@
 <script setup lang="ts">
+import { ref, computed } from "vue";
+import TweetPostForm from "./TweetPostForm.vue";
+import TweetList from "./Tweetist.vue";
 
-const tweets = [
-	{ id: "0", description: "Hello!" },
-	{ id: "1", description: "Good Afternoon!" },
-]
+const tweets = ref([
+	{ id: 0, description: "Hello!" },
+	{ id: 1, description: "Good Afternoon!" },
+	{ id: 2, description: "See You!" },
+	{ id: 3, description: "EMI!" },
+])
+
+const inputtingDescription = ref<string>('')
+
+const postTweet = (description: string): void => {
+	const tweet = {
+		id: Math.random(),
+		description: description
+	}
+	tweets.value.push(tweet)
+}
+
+const deleteTweet = (id: number): void => {
+	console.log('call delete' + ' ' + id);
+	tweets.value = tweets.value.filter((t) => {
+		return t.id !== id
+	})
+}
+
 </script>
 
 <template>
 	<div class="container flex flex-col items-center mx-auto">
 		<h1 class="text-3xl mb-8">Tweeter</h1>
-		<div class="flex flex-col items-center bg-gray-100 p-8 w-1/2 rounded-md">
-			<input type="text" class="p-2 border-2 border-black">
-			<button class="px-6 py-2 bg-teal-400 text-white mt-4 rounded-md cursor-pointer hover:bg-teal-300 transition-all duration-300">post</button>
-		</div>
+		<TweetPostForm @post-tweet="postTweet" />
 		<div class="mt-8">
-			<ul v-for="tweet in tweets" class=" px-0">
-				<li class="list-none text-xl">
-					<span>{{ tweet.id }} : </span>
-					<span>{{ tweet.description }}</span>
-				</li>
+			<p v-if="tweets.length <= 0" class="text-center text-lg font-bold">Tweetが投稿されていません。</p>
+			<ul class=" px-0 p-2 w-96">
+				<TweetList :tweets="tweets" @delete-tweet="deleteTweet" />
 			</ul>
 		</div>
 	</div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
