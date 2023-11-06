@@ -36,7 +36,7 @@ const deleteTweet = (id: number): void => {
 		<div class="mt-8">
 			<p v-if="tweets.length <= 0" class="text-center text-lg font-bold">Tweetが投稿されていません。</p>
 			<ul class=" px-0 p-2 w-96">
-				<TweetList :tweets="tweets" />
+				<TweetList :tweets="tweets" @delete-tweet="deleteTweet" />
 			</ul>
 		</div>
 	</div>
