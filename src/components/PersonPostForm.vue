@@ -17,7 +17,7 @@ const register = () => {
 </script>
 
 <template>
-    <div class=" bg-pink-100 w-full flex flex-col items-center p-8 rounded-md space-x-4">
+    <div class=" bg-pink-100 w-full flex flex-col items-center p-8 rounded-md space-x-4 mb-12">
         <div class="mb-4">
             <span class="text-xl font-bold">name: </span>
             <span>
