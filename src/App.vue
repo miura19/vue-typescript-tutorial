@@ -3,6 +3,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 import Payment from './components/Payment.vue'
 import Tweet from './components/Tweet.vue';
+import Persons from './components/Persons.vue';
 </script>
 
 <template>
@@ -17,7 +18,8 @@ import Tweet from './components/Tweet.vue';
   <main>
     <!-- <TheWelcome /> -->
     <!-- <Payment /> -->
-    <Tweet />
+    <!-- <Tweet /> -->
+    <Persons />
   </main>
 </template>
 
