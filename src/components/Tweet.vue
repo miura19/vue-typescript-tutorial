@@ -1,29 +1,47 @@
 <script setup lang="ts">
+import { ref } from "vue";
 
-const tweets = [
-	{ id: "0", description: "Hello!" },
-	{ id: "1", description: "Good Afternoon!" },
-]
+const tweets = ref([
+	{ id: 0, description: "Hello!" },
+	{ id: 1, description: "Good Afternoon!" },
+	{ id: 2, description: "See You!" },
+])
+
+const inputtingDescription = ref<string>('')
+
+const postTweet = () => {
+	const tweet = {
+		id: Math.random(),
+		description: inputtingDescription.value
+	}
+	tweets.value.push(tweet)
+	inputtingDescription.value = ''
+}
+
+const deleteTweet = (id: number):void => {
+	console.log('call delete' + ' ' + id);
+	tweets.value = tweets.value.filter((t) => {		
+		return t.id !== id
+	})
+}
 </script>
 
 <template>
 	<div class="container flex flex-col items-center mx-auto">
 		<h1 class="text-3xl mb-8">Tweeter</h1>
 		<div class="flex flex-col items-center bg-gray-100 p-8 w-1/2 rounded-md">
-			<input type="text" class="p-2 border-2 border-black">
-			<button class="px-6 py-2 bg-teal-400 text-white mt-4 rounded-md cursor-pointer hover:bg-teal-300 transition-all duration-300">post</button>
+			<input type="text" class="p-2 border border-black" v-model="inputtingDescription">
+			<button @click="postTweet" class="px-6 py-2 bg-teal-400 text-white mt-4 rounded-md cursor-pointer hover:bg-teal-300 transition-all duration-300">post</button>
 		</div>
 		<div class="mt-8">
-			<ul v-for="tweet in tweets" class=" px-0">
-				<li class="list-none text-xl">
-					<span>{{ tweet.id }} : </span>
-					<span>{{ tweet.description }}</span>
+			<ul class=" px-0 p-2 w-96">
+				<li v-for="tweet in tweets" :key="tweet.id" class="list-none text-xl bg-slate-200 p-2 rounded-md flex justify-between items-center mb-4">
+					<span class="p-2">{{ tweet.description }}</span>
+					<button @click="deleteTweet(tweet.id)" class="bg-red-300 py-2 px-4 rounded-md transition-all duration-300 hover:bg-red-200 mt-2">削除</button>
 				</li>
 			</ul>
 		</div>
 	</div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
