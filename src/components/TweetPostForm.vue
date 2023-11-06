@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed ,defineEmits } from "vue";
 
 const inputtingDescription = ref<string>('')
 
+const emit = defineEmits(['post-tweet'])
 const postTweet = (): void => {
-
+    emit('post-tweet' , inputtingDescription.value)
+    inputtingDescription.value = ''
 }
+
 
 const isInputting = computed(() => {
 	if (inputtingDescription.value === '') {
