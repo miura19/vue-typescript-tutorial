@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref , computed } from "vue";
+import { ref, computed } from "vue";
 
 const tweets = ref([
 	{ id: 0, description: "Hello!" },
@@ -9,7 +9,7 @@ const tweets = ref([
 
 const inputtingDescription = ref<string>('')
 
-const postTweet = () => {
+const postTweet = (): void => {
 	const tweet = {
 		id: Math.random(),
 		description: inputtingDescription.value
@@ -18,15 +18,15 @@ const postTweet = () => {
 	inputtingDescription.value = ''
 }
 
-const deleteTweet = (id: number):void => {
+const deleteTweet = (id: number): void => {
 	console.log('call delete' + ' ' + id);
-	tweets.value = tweets.value.filter((t) => {		
+	tweets.value = tweets.value.filter((t) => {
 		return t.id !== id
 	})
 }
 
 const isInputting = computed(() => {
-	if (inputtingDescription.value === ''){
+	if (inputtingDescription.value === '') {
 		return true
 	} else {
 		false
@@ -45,7 +45,8 @@ const isInputting = computed(() => {
 		<div class="mt-8">
 			<p v-if="tweets.length <= 0" class="text-center text-lg font-bold">Tweetが投稿されていません。</p>
 			<ul class=" px-0 p-2 w-96">
-				<li v-for="tweet in tweets" :key="tweet.id" class="list-none text-xl bg-slate-200 p-2 rounded-md flex justify-between items-center mb-4">
+				<li v-for="tweet in tweets" :key="tweet.id"
+					class="list-none text-xl bg-slate-200 p-2 rounded-md flex justify-between items-center mb-4">
 					<span class="p-2">{{ tweet.description }}</span>
 					<button @click="deleteTweet(tweet.id)" class="bg-red-300 py-2 px-4 rounded-md transition-all duration-300 hover:bg-red-200 mt-2">削除</button>
 				</li>
