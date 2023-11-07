@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref , defineEmits , computed } from "vue";
+import { ref, defineEmits, computed } from "vue";
 
 const inputtingName = ref<string>('')
 const inputtingAge = ref<number>(0)
@@ -12,18 +12,36 @@ const register = () => {
         age: inputtingAge.value
     }
     console.log(person);
-    emit('register' , person)
+    emit('register', person)
     inputtingName.value = ''
     inputtingAge.value = 0
 }
 
 const isInputting = computed(() => {
-    if (inputtingName.value === '') {
+    if (inputtingName.value === '' || isValidName.value === true) {
         return true
     } else {
         return false
     }
 })
+
+const nameLengthLimit = 15
+const isValidName = computed(() => {
+    if (inputtingName.value.length > nameLengthLimit) {
+        return true
+    } else {
+        false
+    }
+})
+
+const btnClass = computed(() => {
+    if (isInputting.value === true) {
+        return "bg-fuchsia-300 py-2 px-4 rounded-md font-bold opacity-50"
+    } else {
+        return "bg-fuchsia-300 py-2 px-4 rounded-md font-bold transition-all duration-300 hover:bg-fuchsia-200"
+    }
+})
+
 </script>
 
 <template>
@@ -31,8 +49,9 @@ const isInputting = computed(() => {
         <div class="mb-4">
             <span class="text-xl font-bold">name: </span>
             <span>
-                <input type="text" v-model="inputtingName" class="border border-black">
+                <input type="text" v-model="inputtingName" class="border border-black" :class="{ 'bg-red-300': isValidName }">
             </span>
+            <p v-if="isValidName" class="text-red-400 font-bold mt-2">{{ nameLengthLimit }}文字以内で入力してください！！</p>
         </div>
         <div class="mb-8">
             <span class="text-xl font-bold">age: </span>
@@ -41,7 +60,7 @@ const isInputting = computed(() => {
             </span>
         </div>
         <div class="text-center">
-            <button @click="register" :disabled="isInputting" class="bg-fuchsia-300 py-2 px-4 rounded-md font-bold transition-all duration-300 hover:bg-fuchsia-200">register</button>
+            <button @click="register" :class="btnClass" :disabled="isInputting">register</button>
         </div>
     </div>
 </template>
