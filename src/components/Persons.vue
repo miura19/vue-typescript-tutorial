@@ -18,15 +18,25 @@ const persons: Ref<Person[]> = ref([
     {id: 3 , name:'tomoko' , age: 50},
 ])
 
+const registerPerson = (person :Person):void => {
+    persons.value.push(person)
+}
+
+const deletePerson = (id: number):void => {
+    persons.value = persons.value.filter((p) => {
+		return p.id !== id
+	})
+}
+
 </script>
 
 <template>
     <div class="container mx-auto w-full flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-4">Title</h1>
-        <PersonPostForm />
+        <PersonPostForm @register="registerPerson" />
         <div>
             <ul>
-                <PersonList :persons="persons" />
+                <PersonList :persons="persons" @delete="deletePerson" />
             </ul>
         </div>
     </div>
