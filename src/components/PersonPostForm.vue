@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref , defineEmits } from "vue";
+import { ref , defineEmits , computed } from "vue";
 
 const inputtingName = ref<string>('')
 const inputtingAge = ref<number>(0)
@@ -13,7 +13,17 @@ const register = () => {
     }
     console.log(person);
     emit('register' , person)
+    inputtingName.value = ''
+    inputtingAge.value = 0
 }
+
+const isInputting = computed(() => {
+    if (inputtingName.value === '') {
+        return true
+    } else {
+        return false
+    }
+})
 </script>
 
 <template>
@@ -31,7 +41,7 @@ const register = () => {
             </span>
         </div>
         <div class="text-center">
-            <button @click="register" class="bg-fuchsia-300 py-2 px-4 rounded-md font-bold transition-all duration-300 hover:bg-fuchsia-200">register</button>
+            <button @click="register" :disabled="isInputting" class="bg-fuchsia-300 py-2 px-4 rounded-md font-bold transition-all duration-300 hover:bg-fuchsia-200">register</button>
         </div>
     </div>
 </template>
