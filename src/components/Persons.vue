@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref , onMounted } from "vue"
+import { ref, onMounted } from "vue"
 import type { Ref } from 'vue'
 import PersonPostForm from './PersonPostForm.vue';
 import PersonList from './PersonList.vue';
@@ -14,19 +14,27 @@ export type Person = {
 
 const persons: Ref<Person[]> = ref([])
 
-const registerPerson = (person :Person):void => {
-    persons.value.push(person)
+const id = ref<number>()
+
+const registerPerson = async (person: Person): Promise<void> => {
+    // persons.value.push(person)
+    console.log(person);
+
+    const { data, error } = await supabase
+        .from("persons")
+        .insert({ id: id.value, name: person.name, age: person.age });
+    console.log(data);
 }
 
-const deletePerson = (id: number):void => {
+const deletePerson = (id: number): void => {
     persons.value = persons.value.filter((p) => {
-		return p.id !== id
-	})
+        return p.id !== id
+    })
 }
 
-  onMounted(() => {
+onMounted(() => {
     getPersons()
-  })
+})
 
 const getPersons = async (): Promise<void> => {
     const { data, error } = await supabase
@@ -35,12 +43,12 @@ const getPersons = async (): Promise<void> => {
 
     if (error) {
         console.error("Supabase error:", error);
-    } else {        
+    } else {
         console.log(data);
         persons.value = data;
+        id.value = data.length + 1
     }
 }
-
 
 </script>
 
