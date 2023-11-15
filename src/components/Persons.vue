@@ -17,19 +17,23 @@ const persons: Ref<Person[]> = ref([])
 const id = ref<number>()
 
 const registerPerson = async (person: Person): Promise<void> => {
-    // persons.value.push(person)
     console.log(person);
 
     const { data, error } = await supabase
         .from("persons")
-        .insert({ id: id.value, name: person.name, age: person.age });
-    console.log(data);
+        .insert({ id: person.id, name: person.name, age: person.age });
+    getPersons()
 }
 
-const deletePerson = (id: number): void => {
-    persons.value = persons.value.filter((p) => {
-        return p.id !== id
-    })
+const deletePerson = async (id: number): Promise<void> => {
+    // persons.value = persons.value.filter((p) => {
+    //     return p.id !== id
+    // })
+    const { error } = await supabase
+        .from('persons')
+        .delete()
+        .eq('id', id)
+    getPersons()
 }
 
 onMounted(() => {
