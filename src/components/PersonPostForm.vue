@@ -7,11 +7,10 @@ const inputtingAge = ref<number>(0)
 const emit = defineEmits(['register'])
 const register = () => {
     const person = {
-        id: Math.random(),
+        id: Math.floor( Math.random() * 1000000000000001 ),
         name: inputtingName.value,
         age: inputtingAge.value
     }
-    console.log(person);
     emit('register', person)
     inputtingName.value = ''
     inputtingAge.value = 0

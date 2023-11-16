@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { ref , onMounted } from "vue"
+import { ref, onMounted } from "vue"
 import type { Ref } from 'vue'
 import PersonPostForm from './PersonPostForm.vue';
 import PersonList from './PersonList.vue';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-    "https://tpdjllyeeukwsybtvwxn.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRwZGpsbHllZXVrd3N5YnR2d3huIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTk4NjQwMTMsImV4cCI6MjAxNTQ0MDAxM30.wDyPFcw0pyPin_H4tE2c4NcUj-EPvN3R58MjyicE7Hg"
-  );
+import { supabase } from '../supabase'
 
 
 export type Person = {
@@ -17,41 +12,47 @@ export type Person = {
     age: number,
 }
 
-const persons: Ref<Person[]> = ref([
-    {id: 0 , name:'emi' , age: 35},
-    {id: 1 , name:'kana' , age: 40},
-    {id: 2 , name:'soichiro' , age: 45},
-    {id: 3 , name:'tomoko' , age: 50},
-])
+const persons: Ref<Person[]> = ref([])
 
-const registerPerson = (person :Person):void => {
-    persons.value.push(person)
+const id = ref<number>()
+
+const registerPerson = async (person: Person): Promise<void> => {
+    console.log(person);
+
+    const { data, error } = await supabase
+        .from("persons")
+        .insert({ id: person.id, name: person.name, age: person.age });
+    getPersons()
 }
 
-const deletePerson = (id: number):void => {
-    persons.value = persons.value.filter((p) => {
-		return p.id !== id
-	})
+const deletePerson = async (id: number): Promise<void> => {
+    // persons.value = persons.value.filter((p) => {
+    //     return p.id !== id
+    // })
+    const { error } = await supabase
+        .from('persons')
+        .delete()
+        .eq('id', id)
+    getPersons()
 }
+
+onMounted(() => {
+    getPersons()
+})
 
 const getPersons = async (): Promise<void> => {
     const { data, error } = await supabase
         .from("persons")
-        .select("*");
+        .select();
 
     if (error) {
         console.error("Supabase error:", error);
-    } else {        
+    } else {
         console.log(data);
-        
         persons.value = data;
-        // console.log(persons.value);
+        id.value = data.length + 1
     }
 }
-
-onMounted(() => {
-    getPersons();
-});
 
 </script>
 
